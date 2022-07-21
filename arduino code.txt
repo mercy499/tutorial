@@ -1,0 +1,183 @@
+int ch1; // Here's where we'll keep our channel values
+int ch2;
+int ch3;
+int left_motor_1 = 30;  // left moto r first pin to pin 4
+int left_motor_2 = 31; // left motor second pin to pin 5
+int right_motor_1 =32;// right motor first pin to pin 7
+int right_motor_2 =33;// right motor second pin to pin 8
+int relay1 =12;
+int relay2 = 13;
+int l1=52;
+int l2=53;
+int l3=50;
+
+#include <LiquidCrystal_I2C.h>
+
+LiquidCrystal_I2C lcd(0x27,16,2);
+
+void setup() {
+
+  pinMode(5, INPUT); // Set our input pins as such
+  pinMode(6, INPUT);
+  pinMode(7, INPUT);
+  
+    pinMode(l1,INPUT);
+      pinMode(l2,INPUT);
+        pinMode(l3,INPUT);
+          
+    // declare all motor pin as output 
+  pinMode(left_motor_1,OUTPUT);
+  pinMode(left_motor_2,OUTPUT);
+  pinMode(right_motor_1,OUTPUT);
+  pinMode(right_motor_2,OUTPUT);
+   pinMode(relay1,OUTPUT);
+    pinMode(relay2,OUTPUT);
+   
+  //Set State of Pins all to LOW (0)
+  digitalWrite(left_motor_1,0);
+  digitalWrite(left_motor_2,0);
+  digitalWrite(right_motor_1,0);
+  digitalWrite(right_motor_2,0);
+  digitalWrite(relay1,1);
+  digitalWrite(relay2,1);
+
+
+  Serial.begin(9600); // Pour a bowl of Serial
+    lcd.init();
+   lcd.backlight(); //  IT WILL TURN ON BACK LIGHT 
+  lcd.clear();
+  lcd.setCursor(0,1);
+  lcd.print("Ph:");
+  
+
+
+}
+
+void loop() {
+  lcd.setCursor(3,1);
+  lcd.print("    ");
+  lcd.setCursor(3,1);
+  lcd.print(analogRead(A11));
+  Serial.print("Channel 1:"); // Print the value of 
+  while (ch1 ==0){
+  ch1 = pulseIn(6, HIGH, 25000); // Read the pulse width of
+  } 
+  Serial.print("Channel 2:"); // Print the value of 
+while (ch2 ==0){
+  ch2 = pulseIn(5, HIGH, 25000); // each channel
+}
+Serial.print("Channel 3:"); // Print the value of 
+  while (ch3 ==0){
+    ch3 = pulseIn(7, HIGH, 25000);
+  }
+
+  Serial.print("Channel 1:"); // Print the value of 
+  Serial.println(ch1);        // each channel
+
+  Serial.print("Channel 2:");
+  Serial.println(ch2);
+
+  Serial.print("Channel 3:");
+  Serial.println(ch3);
+  if (ch1 > 1700){
+    forward();
+    Serial.print("forward");
+    }
+    else if (ch1 <1000 && ch1 >700){
+      backward();
+      Serial.print("backward");
+      }
+      else if(ch2 > 1700 ){
+           left();
+          Serial.print("left");
+        
+        }
+        else if (ch2 < 1000 && ch1 >700){
+
+                  right();
+        Serial.print("right");
+         
+          }
+   else {
+    stopcar();
+    }
+  delay(300);
+  if(ch3 >1700){
+    digitalWrite(relay1,HIGH);
+    digitalWrite(relay2,LOW);
+    }
+    else if(ch3 <1000){
+      digitalWrite(relay2,HIGH);
+      digitalWrite(relay1,LOW);
+      }
+      else 
+      {
+        digitalWrite(relay1,HIGH);
+        digitalWrite(relay2,HIGH);
+        }
+        delay(500);
+        ch1=0;
+        ch2=0;
+        ch3=0;
+        if(analogRead(A15)>100){
+          lcd.clear();
+          lcd.setCursor(0,0); ///  TO SET WRITING POSITION ON LCD ( COL,ROW)
+          lcd.print("DEPLETED");
+          delay(500); 
+          
+          }
+          if(analogRead(A14)>100){
+            lcd.clear();
+           lcd.setCursor(0,0); ///  TO SET WRITING POSITION ON LCD ( COL,ROW)
+          lcd.print("DEFICIENT"); 
+          delay(500); 
+          }
+          if(analogRead(A13)>100){
+            lcd.clear();
+           lcd.setCursor(0,0); ///  TO SET WRITING POSITION ON LCD ( COL,ROW)
+          lcd.print("ADEQUATE"); 
+          delay(500); 
+          
+          }
+         
+}
+
+void forward(){
+  digitalWrite(left_motor_1,1); //Turn digital out left_motor_1 to High
+  digitalWrite(left_motor_2,0); //Turn digital out left_motor_2 to Low
+  digitalWrite(right_motor_1,1);//Turn digital out right_motor_1 to High 
+  digitalWrite(right_motor_2,0);// turn digital out right_motor_2 to low
+  
+  }
+  void backward(){
+
+    digitalWrite(left_motor_1,0); 
+  digitalWrite(left_motor_2,1);
+  digitalWrite(right_motor_1,0);
+  digitalWrite(right_motor_2,1);
+  
+    
+    }
+
+    void left(){
+      digitalWrite(left_motor_1,0); 
+  digitalWrite(left_motor_2,1);
+  digitalWrite(right_motor_1,1);
+  digitalWrite(right_motor_2,0);
+      
+      }
+
+void right(){
+  digitalWrite(left_motor_1,1); 
+  digitalWrite(left_motor_2,0);
+  digitalWrite(right_motor_1,0);
+  digitalWrite(right_motor_2,1);
+  }
+
+  void stopcar(){
+    digitalWrite(left_motor_1,0); 
+  digitalWrite(left_motor_2,0);
+  digitalWrite(right_motor_1,0);
+  digitalWrite(right_motor_2,0);
+    
+    }
