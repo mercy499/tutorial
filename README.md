@@ -1,4 +1,4 @@
-# CHR
+# Crofting Hybrid Robot
 
 # Introduction
 Farmers face difficult in identifying if any kind of disease infects the plants and also adding adequate and type of fertilizers to soil is crucial. Finding the amount of [N-nitrogen, P-phosphorus, K-potassium] levels in soil requires time consuming process of collecting soil sample and taking it to nearest city LAB to get tested there is a requirement for a modern robot which can do both the task of finding the plant disease and also finding the NPK concentration of soil.
@@ -62,10 +62,5 @@ ELLEUCH, Monji KHERALLAH.
 [6] Plant Leaf Disease Detection and Classification based on CNN with LVQ Algorithm 
 Melike Sardogan, Adem Tuncer, Yunus Ozen
 
-###### snapshots
-![image](https://user-images.githubusercontent.com/72141069/180144704-cb8e2b1b-f181-4c04-80c0-291738154767.png)
-this image represents Model of crofting hybrid
-
-
-
-
+###### Conclusion
+In this project, a Convolutional Neural Network was constructed to identify plant diseases automatically. Our developed model can distinguish between 38 classes of both healthy leaves and disease affected leaves. The entire method has been narrated specifically. Model performances have been analyzed through comparison with few other transfer learning models along with suitable graphs. With the increasing depth of CNN model, more image data is required for the best generalization of the model. For that reason, after preprocessing the data, we enlarged the dataset through the process of augmentation. Finally, It’s probably due to the nature of the leaves. The images of some species are very close to each other and share very similar shape, color, and texture. So, sometimes it is very hard for networks to correctly predict the true labels. Nowadays, smart mobile devices facilities us in terms of easy access and the flexibility in uses. Mobile camera can be used to capture these leaves of plant. A precise plant diseases detection model implemented in those smart phones will help farmers to recognize the plant diseases in a very short time through a convenient way. Farmers will be able to make decision own self. And, it will have a golden impact on the progress of agriculture.
